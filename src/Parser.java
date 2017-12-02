@@ -1,18 +1,18 @@
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Month;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+
 
 public class Parser {
 
-    public static void main(String args[]) throws ParseException {
+    public static void getSiteDate() {
 
         Document doc = null;
         try {
@@ -34,28 +34,38 @@ public class Parser {
             System.out.println("NO MATCH");
         }
 
-        System.out.println(date);
         Pattern day = Pattern.compile("^(\\d{1,2})");
         Matcher dayMatcher = day.matcher(date);
         dayMatcher.find();
         String day_String = dayMatcher.group(0);
 
-//        Pattern month = Pattern.compile("^(\\d{1,2})");//todo: month enum
-//        Matcher monthMatcher = month.matcher(date);
-//        monthMatcher.find();
-//        String month_String = monthMatcher.group(0);
-//
+        Pattern month = Pattern.compile("\\w{4,}");//todo: month enum
+        Matcher monthMatcher = month.matcher(date);
+        monthMatcher.find();
+        String month_String = monthMatcher.group(0);
+
+
+        Month month1 = Month.valueOf(month_String.toUpperCase());
+        month_String = String.valueOf(month1.getValue());
+
         Pattern year = Pattern.compile("(\\d{4})");
         Matcher yearMatcher = year.matcher(date);
         yearMatcher.find();
         String year_String = yearMatcher.group(0);
 
+        String stringToDate = String.format("%s-%s-%s",day_String,month_String,year_String);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy");
 
+        Date string_date = null;
+        try {
+            string_date = dateFormat.parse(stringToDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(String.format("update on site 'https://usn.ubuntu.com/usn/' was at %s",
+                dateFormat.format(string_date)));
 
     }
-
-
-
-
 }
 

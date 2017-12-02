@@ -28,7 +28,7 @@ public class DateCheck {
                 String date = bufferedReader.readLine();
                 String time = bufferedReader.readLine();
 
-                System.out.println("last check was " + date + " in " + time);
+                System.out.println("last update was " + date + " in " + time);
 
             } catch (IOException e) {
                 System.out.println("cant access file");
