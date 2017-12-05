@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,14 +9,18 @@ public class BashExec {
 
         String[] cmd = {"/bin/bash","-c",""};
         System.out.println("For start the procedure of updating please enter your 'sudo' password");
+
         InputStreamReader inputStreamReader = new InputStreamReader(System.in);
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
         String password = bufferedReader.readLine();
-        try {
 
-            String commandTest = String.format("echo %s| sudo -S ls -la", password);//todo check root password another way
+        try
+        {
+            String commandTest = String.format("echo %s| sudo -S ls -la", password); //todo check root password another way
             String [] cmdTest = {"/bin/bash","-c",""};
+
             cmdTest[2] = commandTest;
+
             Runtime rTest = Runtime.getRuntime();
             Process pTest = rTest.exec(cmdTest);
             BufferedReader inTest = new BufferedReader(new
@@ -50,8 +53,6 @@ public class BashExec {
 //             String command = String.format("echo %s| sudo -S whereis %s",
 //                     password,packName);
              cmd[2] = command;
-//             System.out.println(Arrays.toString(cmd));
-
              try {
 
                  Runtime r = Runtime.getRuntime();
