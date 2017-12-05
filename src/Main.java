@@ -4,8 +4,8 @@ import java.io.InputStreamReader;
 
 public class Main {
     public static void main(String[] args) {
-        DateCheck.checkDate();
         Parser.getSiteDate();
+//        DateCheck.checkDate();
         System.out.println(String.format("For now we you can update %d packages", Counter.quantityOfUpdates));
         System.out.println("Are you want to update? (yes/no)");
         try (InputStreamReader inputStreamReader = new InputStreamReader(System.in);
@@ -25,8 +25,6 @@ public class Main {
                 default:
                     System.out.println("please, type 'yes' or 'no'");
                     answer = bufferedReader.readLine();
-
-
             }
         }
 
@@ -35,5 +33,8 @@ public class Main {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        System.out.println("\n SUCCESS!!");
+
     }
 }

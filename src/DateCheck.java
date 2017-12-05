@@ -28,7 +28,7 @@ public class DateCheck {
                 String date = bufferedReader.readLine();
                 String time = bufferedReader.readLine();
 
-                System.out.println("last update was " + date + " in " + time);
+                System.out.println("last check for updates was " + date + " in " + time);
 
             } catch (IOException e) {
                 System.out.println("cant access file");
@@ -36,7 +36,7 @@ public class DateCheck {
 
         }
         else {
-            System.out.println("file doesnt exists. It will be creating now!");
+            System.out.println("can't find any information of previous update. Start now!");
             writeDate();
         }
     }

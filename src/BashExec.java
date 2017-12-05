@@ -44,13 +44,13 @@ public class BashExec {
          while ((packName = inputFile.readLine())!= null){
              count++;
 
-//             String command = String.format("echo %s| sudo -S apt-get -y install --only-upgrade %s",
-//                     password,packName);
-
-             String command = String.format("echo %s| sudo -S whereis %s",
+             String command = String.format("echo %s| sudo -S apt-get -y install --only-upgrade %s",
                      password,packName);
+
+//             String command = String.format("echo %s| sudo -S whereis %s",
+//                     password,packName);
              cmd[2] = command;
-             System.out.println(Arrays.toString(cmd));
+//             System.out.println(Arrays.toString(cmd));
 
              try {
 

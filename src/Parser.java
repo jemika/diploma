@@ -18,7 +18,8 @@ public class Parser {
         try {
             doc = Jsoup.connect("https://usn.ubuntu.com/usn/").get();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("THERE IS NOT INTERNET ACCESS!");
+            System.exit(-1);
         }
 
         Element content = doc.select("h3").first();
