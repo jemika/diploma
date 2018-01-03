@@ -4,8 +4,8 @@ import java.io.InputStreamReader;
 
 public class Main {
     public static void main(String[] args) {
-        Parser.getSiteDate();
-        DateCheck.checkDate();
+//        Parser.getSiteDate();
+//        DateCheck.checkDate();
         System.out.println(String.format("For now we you can update %d packages", Counter.quantityOfUpdates));
         System.out.println("Are you want to update? (yes/no)");
         try (InputStreamReader inputStreamReader = new InputStreamReader(System.in);
