@@ -13,68 +13,7 @@ import org.jsoup.select.Elements;
 
 
 public class Parser {
-    public static void main(String[] args) {
-        getNeededDate();
-    }
 
-//    public static void getSiteDate() {
-//
-//        Document doc = null;
-//        try {
-//            doc = Jsoup.connect("https://usn.ubuntu.com/usn/").get();
-//        } catch (IOException e) {
-//            System.err.println("THERE IS NOT INTERNET ACCESS!");
-//            System.exit(-1);
-//        }
-//
-//        Element content = doc.select("h3").first();
-//
-//        String line = String.valueOf(content);
-//        String pattern = "\\d{1,2}\\w{2}\\s+\\w+\\s+\\d{4}";
-//        Pattern r = Pattern.compile(pattern);
-//        Matcher matcher = r.matcher(line);
-//        String date = "";
-//        if (matcher.find( )) {
-//            date = matcher.group(0);
-//        }else {
-//            System.out.println("NO MATCH");
-//        }
-//
-////        Pattern day = Pattern.compile("^(\\d{1,2})");
-////        Matcher dayMatcher = day.matcher(date);
-////        dayMatcher.find();
-////        String day_String = dayMatcher.group(0);
-//
-////        String day_String = DateCheck.findDay(date);
-//
-////        Pattern month = Pattern.compile("\\w{4,}");//todo: month enum
-////        Matcher monthMatcher = month.matcher(date);
-////        monthMatcher.find();
-////        String month_String = monthMatcher.group(0);
-////        Month month1 = Month.valueOf(month_String.toUpperCase());
-////        month_String = String.valueOf(month1.getValue());
-//
-////        String month_String = DateCheck.findMonth(date);
-//
-//
-//
-////        Pattern year = Pattern.compile("(\\d{4})");
-////        Matcher yearMatcher = year.matcher(date);
-////        yearMatcher.find();
-////        String year_String = yearMatcher.group(0);
-//
-////        String year_String = DateCheck.findYear(date);
-//
-////        String stringToDate = String.format("%s-%s-%s",day_String,month_String,year_String);
-////        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy");
-//
-//
-//        Date string_date = DateCheck.transformDate(date);
-//
-//        System.out.println(String.format("update on site 'https://usn.ubuntu.com/usn/' was at %s",
-//                string_date));
-//
-//    }
     public static void getNeededDate(){
         ArrayList<String> hreflist = new ArrayList<>();
         Map<String, Integer> priorityMap = null;
@@ -84,9 +23,6 @@ public class Parser {
         } catch (IOException e) {
             System.err.print("Trouble with connection to the site");
         }
-//        Elements links = doc.select("a[href]");
-//        System.out.println(links.toString());
-
         Element allNotice = doc.select("div.eight-col").first();
         for (Element elem:allNotice.children()) {
             if (elem.hasClass("eight-col notice")){
