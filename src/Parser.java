@@ -1,8 +1,4 @@
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Month;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,6 +9,9 @@ import org.jsoup.select.Elements;
 
 
 public class Parser {
+    public static void main(String[] args) {
+        getNeededDate();
+    }
 
     public static void getNeededDate(){
         ArrayList<String> hrefList = new ArrayList<>();
@@ -28,14 +27,13 @@ public class Parser {
             if (elem.hasClass("eight-col notice")){
                 Element h3 = elem.getElementsByTag("h3").first();
                 String h3Text = h3.text();
-
                 Pattern p = Pattern.compile("((.*)-\\s(\\d{1,2}\\w{1,2}\\s\\w*\\s\\d{4}))");
                 Matcher m = p.matcher(h3Text);
                 m.find();
                 String date_String = m.group(3);
 
                 Date date = DateCheck.transformDate(date_String);
-                if (date.after(DateCheck.getUpdateDate()) || (date.compareTo(DateCheck.getUpdateDate()) == 0)) {
+                if (date.after(Util.getDate()) || (date.compareTo(Util.getDate()) == 0)) {
 
                     Elements links = elem.select("a[href]");
                     for (Element link:links) {
@@ -43,12 +41,14 @@ public class Parser {
                         hrefList.add(href);
                         priorityMap = getPriorities(hrefList);
                         if (priorityMap.containsKey("Medium") || priorityMap.containsKey("High")){
-                            getPackagesToUpdate(hrefList);
+                            FileWriter.writeData("list_to_update", getPackagesToUpdate(hrefList));
                         }
-                        else System.exit(1);
+                        else continue;
                     }
                 }
-                priorityMap.clear();
+                if (!priorityMap.isEmpty()){
+                    priorityMap.clear();
+                }
                 hrefList.clear();
             }
 

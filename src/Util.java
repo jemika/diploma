@@ -1,6 +1,7 @@
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
@@ -20,7 +21,34 @@ public class Util {
         return current;
     }
 
-    public static String getDate(){
+    public static Date getDate(){
+        Properties properties = new Properties();
+        InputStream input = null;
+        Date date = null;
+        String date_String = null;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            input = new FileInputStream("config.properties");
+            properties.load(input);
+            date_String = properties.getProperty("updateDay");
+            date = dateFormat.parse(date_String);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return date;
+    }
+
+    public static String writeDate(){
 
         String dateToday = null;
 

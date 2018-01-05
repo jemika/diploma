@@ -12,6 +12,7 @@ public class DateCheck {
 
     public static Date getUpdateDate(){
 
+
         File file = new File("date");
         if (file.exists() && !file.isDirectory()){
             try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){

@@ -53,7 +53,7 @@ public class BashExec {
     public static void updateAllApps(){
 
         String[] cmd = {"/bin/bash","-c",""};
-        cmd[2] = String.format("echo %s| sudo -S apt-get -y upgrade","1");
+        cmd[2] = ("apt-get -y upgrade");
         try {
 
             Runtime r = Runtime.getRuntime();
@@ -75,62 +75,28 @@ public class BashExec {
 
 
 
-    /*public static void update() throws IOException, InterruptedException {
+    public static void update(){
 
         String[] cmd = {"/bin/bash","-c",""};
-        System.out.println("For start the procedure of updating please enter your 'sudo' password");
-
-
-
-        try(InputStreamReader inputStreamReader = new InputStreamReader(System.in);
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader))
-        {
-            String password = bufferedReader.readLine();
-            String commandTest = String.format("echo %s| sudo -S ls -la", password); //todo check root password another way
-            String [] cmdTest = {"/bin/bash","-c",""};
-
-            cmdTest[2] = commandTest;
-
-            Runtime rTest = Runtime.getRuntime();
-            Process pTest = rTest.exec(cmdTest);
-            BufferedReader inTest = new BufferedReader(new
-                    InputStreamReader(pTest.getInputStream()));
-            if (inTest.readLine() == null) {
-                System.out.println("Your password is incorrect");
-                System.exit(-1);
-            }
-            inTest.close();
-
-        } catch (IOException e) {
-            System.out.println(e);
-        }
-
-        String packName;
+        String packName = null;
         int count = 0;
 
-
-
-        try (FileReader fileReader = new FileReader("packages_need_updates(only names)");
+        try (FileReader fileReader = new FileReader("list_to_update");
                 BufferedReader inputFile = new BufferedReader(fileReader))
 
         {
          while ((packName = inputFile.readLine())!= null) {
              count++;
-
-             String command = String.format("echo %s| sudo -S apt-get -y install --only-upgrade %s",
-                     password,packName);
-
-//             String command = String.format("echo %s| sudo -S whereis %s",
-//                     password,packName);
+             String command = String.format("apt-get -y install --only-upgrade %s",
+                     packName);
              cmd[2] = command;
              try {
-
                  Runtime r = Runtime.getRuntime();
                  Process p = r.exec(cmd);
 
                  BufferedReader in = new BufferedReader(new
-                         InputStreamReader(p.getInputStream()));
-                 String inputLine;
+                 InputStreamReader(p.getInputStream()));
+                 String inputLine = null;
 
                  while ((inputLine = in.readLine()) != null) {
                      String message = String.format("[%d\\%d] %s", count, Counter.quantityOfUpdates,inputLine);
@@ -143,9 +109,12 @@ public class BashExec {
              }
 
          }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        DateCheck.writeDate();
-       }*/
+       }
 
     public static void listAppsNeedUpdatesFull() {
 

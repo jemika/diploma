@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 public class Main {
     public static void main(String[] args) {
@@ -46,8 +45,8 @@ public class Main {
                         switch (answer) {
                             case "yes":
                                 flag = false;
-//                                BashExec.updateAllApps();
-                                properties.setProperty("updateDay", Util.getDate());
+                                BashExec.updateAllApps();
+                                properties.setProperty("updateDay", Util.writeDate());
                                 properties.store(outputStream, "config");
                                 BashExec.addToCron();
                                 System.out.println("All programs have successfully updated.\n" +
@@ -69,6 +68,34 @@ public class Main {
             }
         }
         Parser.getNeededDate();
+        file = new File("list_to_update");
+        if (file.exists()){
+            BashExec.update();
+            String email = Util.getEmail();
+            try (InputStream inputStream = new FileInputStream("config.properties");
+            OutputStream outputStream = new FileOutputStream("config.properties"))
+            {
+                Properties properties = new Properties();
+                properties.load(inputStream);
+                properties.setProperty("updateDay", Util.writeDate());
+                properties.setProperty("email", email);
+                properties.store(outputStream, null);
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            String message = String.format("%s on your Ubuntu OS was updated %d programs.\n" +
+                    "They are: %s\n" +
+                            "YOU NEED TO LOG IN INTO YOUR SYSTEM AND DO REBOOT",
+                    Util.getDate().toString(),
+                    Counter.quantityOfUpdates,
+                    Counter.allUpdatedApps.toString());
+            BashExec.sendEmail(message);
+            file.delete();
+
+        }
     }
 }
 
