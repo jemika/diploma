@@ -41,15 +41,13 @@ public class Parser {
                         hrefList.add(href);
                         priorityMap = getPriorities(hrefList);
                         if (priorityMap.containsKey("Medium") || priorityMap.containsKey("High")){
-                            FileWriter.writeData("list_to_update", getPackagesToUpdate(hrefList));
+                            FileWriter.writeData(Util.getCurrentDir() + "/list_to_update", getPackagesToUpdate(hrefList));
+                            priorityMap.clear();
                         }
                         else continue;
                     }
                 }
-                if (!priorityMap.isEmpty()){
-                    priorityMap.clear();
-                }
-                hrefList.clear();
+               hrefList.clear();
             }
 
         }

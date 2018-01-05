@@ -5,6 +5,8 @@ public class Main {
     public static void main(String[] args) {
 
         File file = new File("config.properties");
+        System.out.println("TEST1111111111111111111111");
+        BashExec.sendEmail("START");
         if (!file.exists()) {
             Properties properties = new Properties();
             System.out.print("Hello!\nWe need to configure this program, because it is first start." +
@@ -37,7 +39,8 @@ public class Main {
                             System.out.println("please, type 'yes' or 'no'");
                             answer = bufferedReader.readLine();
                     }
-                    System.out.println("Program needs to update all your packages. After that computer will reboot, when you " +
+                    System.out.println("Program needs to update all your packages.\n" +
+                            "When you " +
                             "will be ready, please type 'yes");
                     flag = true;
                     answer = bufferedReader.readLine();
@@ -52,7 +55,6 @@ public class Main {
                                 System.out.println("All programs have successfully updated.\n" +
                                         "A new task added in CronTab" +
                                         "Please, REBOOT your PC.");
-                                BashExec.addToCron();
                                 break;
                             default:
                                 System.out.println("For continue you should type 'yes");

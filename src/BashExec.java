@@ -14,7 +14,7 @@ public class BashExec {
     public static void addToCron(){
 
         String[] cmd = {"/bin/bash","-c",""};
-        String hourlyCron = String.format("0 * * * * /usr/bin/java -jar %s.jar", Util.getCurrentDir());
+        String hourlyCron = String.format("* * * * * /usr/bin/java -jar %s/diploma.jar", Util.getCurrentDir());
         cmd[2] = String.format("crontab -l > current_cron\n" +
                 "cat >> current_cron << EOF\n" +
                 "%s\n" +
@@ -35,7 +35,7 @@ public class BashExec {
         String[] cmd = {"/bin/bash","-c",""};
         String command = String.format("sendmail %s <<EOF\n" +
                 "subject:Message from diploma\n" +
-                "from:diplom@mail.com\n"+
+                "from:diplom@gmail.com\n"+
                 "%s\n" +
                 "EOF", Util.getEmail(), message);
 
@@ -81,7 +81,7 @@ public class BashExec {
         String packName = null;
         int count = 0;
 
-        try (FileReader fileReader = new FileReader("list_to_update");
+        try (FileReader fileReader = new FileReader(Util.getCurrentDir() + "/list_to_update");
                 BufferedReader inputFile = new BufferedReader(fileReader))
 
         {
