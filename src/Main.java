@@ -5,13 +5,11 @@ public class Main {
     public static void main(String[] args) {
 
         File file = new File("config.properties");
-        System.out.println("TEST1111111111111111111111");
-        BashExec.sendEmail("START");
         if (!file.exists()) {
             Properties properties = new Properties();
             System.out.print("Hello!\nWe need to configure this program, because it is first start." +
                     "\nDo you want this program send you emails when updating has done?" +
-                    "\nPlease, type [yes or no]");
+                    "\nPlease, type [yes or no]\n");
             try (InputStreamReader inputStreamReader = new InputStreamReader(System.in);
                  BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                  OutputStream outputStream = new FileOutputStream(file)) {
@@ -100,41 +98,3 @@ public class Main {
         }
     }
 }
-
-
-
-
-////        Parser.getSiteDate();
-////        DateCheck.checkDate();
-//        System.out.println(String.format("For now we you can update %d packages", Counter.quantityOfUpdates));
-//        System.out.println("Are you want to update? (yes/no)");
-//        try (InputStreamReader inputStreamReader = new InputStreamReader(System.in);
-//                BufferedReader bufferedReader = new BufferedReader(inputStreamReader))
-//        {
-//        String answer = bufferedReader.readLine();
-//        boolean flag = true;
-//        while(flag){
-//            switch (answer){
-//
-//                case "yes": BashExec.update();
-//                flag = false;
-//                    break;
-//                case "no":
-//                    System.out.println("goodbye!");
-//                    System.exit(1);
-//                default:
-//                    System.out.println("please, type 'yes' or 'no'");
-//                    answer = bufferedReader.readLine();
-//            }
-//        }
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//
-//        System.out.println("\n SUCCESS!!");
-//
-//    }
-

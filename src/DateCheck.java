@@ -1,60 +1,11 @@
-import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Month;
 import java.util.Date;
-import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DateCheck {
-
-
-    public static Date getUpdateDate(){
-
-
-        File file = new File("date");
-        if (file.exists() && !file.isDirectory()){
-            try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
-
-                String date = bufferedReader.readLine();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                return dateFormat.parse(date);
-
-            } catch (IOException e) {
-                System.out.println("cant access file");
-            } catch (ParseException e) {
-                System.err.print("Trouble when parsing date");
-            }
-
-        }
-        else {
-            System.out.println("can't find any information of previous update. Start now!");
-            return null;
-        }
-        return null;
-    }
-//    public static void checkDate(){
-//
-//        File file = new File("date");
-//        if (file.exists() && !file.isDirectory()){
-//            try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
-//
-//                String date = bufferedReader.readLine();
-//                String time = bufferedReader.readLine();
-//
-//                System.out.println("last check for updates was " + date + " in " + time);
-//
-//            } catch (IOException e) {
-//                System.out.println("cant access file");
-//            }
-//
-//        }
-//        else {
-//            System.out.println("can't find any information of previous update. Start now!");
-//            writeDate();
-//        }
-//    }
 
     public static String findDay(String date){
         Pattern day = Pattern.compile("^(\\d{1,2})");
