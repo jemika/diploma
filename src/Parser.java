@@ -9,9 +9,6 @@ import org.jsoup.select.Elements;
 
 
 public class Parser {
-    public static void main(String[] args) {
-        getNeededDate();
-    }
 
     public static void getNeededDate(){
         ArrayList<String> hrefList = new ArrayList<>();
@@ -41,7 +38,8 @@ public class Parser {
                         hrefList.add(href);
                         priorityMap = getPriorities(hrefList);
                         if (priorityMap.containsKey("Medium") || priorityMap.containsKey("High")){
-                            FileWriter.writeData(Util.getCurrentDir() + "/list_to_update", getPackagesToUpdate(hrefList));
+                            FileWriter.writeData("/home/jemik/IdeaProjects/diploma/out/artifacts/diploma_jar/list_to_update",
+                                    getPackagesToUpdate(hrefList));
                             priorityMap.clear();
                         }
                         else continue;

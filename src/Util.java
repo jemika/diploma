@@ -19,7 +19,7 @@ public class Util {
             e.printStackTrace();
         }
 
-        return current;
+        return current + "/";
     }
 
     public static Date getDate(){
@@ -29,7 +29,7 @@ public class Util {
         String date_String = null;
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
         try {
-            input = new FileInputStream("config.properties");
+            input = new FileInputStream("/home/jemik/IdeaProjects/diploma/out/artifacts/diploma_jar/config.properties");
             properties.load(input);
             date_String = properties.getProperty("updateDay");
             date = dateFormat.parse(date_String);
@@ -66,7 +66,7 @@ public class Util {
         String email = null;
 
         try {
-            input = new FileInputStream("config.properties");
+            input = new FileInputStream("/home/jemik/IdeaProjects/diploma/out/artifacts/diploma_jar/config.properties");
             properties.load(input);
             email = properties.getProperty("email");
         } catch (IOException ex) {

@@ -2,9 +2,11 @@ import java.io.*;
 import java.util.Properties;
 
 public class Main {
+
+
     public static void main(String[] args) {
 
-        File file = new File("config.properties");
+        File file = new File("/home/jemik/IdeaProjects/diploma/out/artifacts/diploma_jar/config.properties");
         if (!file.exists()) {
             Properties properties = new Properties();
             System.out.print("Hello!\nWe need to configure this program, because it is first start." +
@@ -49,7 +51,9 @@ public class Main {
                                 BashExec.updateAllApps();
                                 properties.setProperty("updateDay", Util.writeDate());
                                 properties.store(outputStream, "config");
+
                                 BashExec.addToCron();
+                                System.out.println("\n************************\n");
                                 System.out.println("All programs have successfully updated.\n" +
                                         "A new task added in CronTab" +
                                         "Please, REBOOT your PC.");
@@ -67,13 +71,15 @@ public class Main {
                 e.printStackTrace();
             }
         }
+        BashExec.sendEmail("test_connect");
         Parser.getNeededDate();
-        file = new File("list_to_update");
+
+        file = new File("/home/jemik/IdeaProjects/diploma/out/artifacts/diploma_jar/list_to_update");
         if (file.exists()){
             BashExec.update();
             String email = Util.getEmail();
-            try (InputStream inputStream = new FileInputStream("config.properties");
-            OutputStream outputStream = new FileOutputStream("config.properties"))
+            try (InputStream inputStream = new FileInputStream("/home/jemik/IdeaProjects/diploma/out/artifacts/diploma_jar/config.properties");
+            OutputStream outputStream = new FileOutputStream("/home/jemik/IdeaProjects/diploma/out/artifacts/diploma_jar/config.properties"))
             {
                 Properties properties = new Properties();
                 properties.load(inputStream);

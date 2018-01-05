@@ -5,7 +5,7 @@ public class BashExec {
     public static void addToCron(){
 
         String[] cmd = {"/bin/bash","-c",""};
-        String hourlyCron = String.format("* * * * * /usr/bin/java -jar %s/diploma.jar", Util.getCurrentDir());
+        String hourlyCron = String.format("0 * * * * /usr/bin/java -jar %sdiploma.jar", Util.getCurrentDir());
         cmd[2] = String.format("crontab -l > current_cron\n" +
                 "cat >> current_cron << EOF\n" +
                 "%s\n" +
@@ -25,7 +25,7 @@ public class BashExec {
     public static void sendEmail(String message){
 
         String[] cmd = {"/bin/bash","-c",""};
-        String command = String.format("sendmail %s <<EOF\n" +
+        String command = String.format("/usr/sbin/sendmail %s <<EOF\n" +
                 "subject:Message from diploma\n" +
                 "from:diplom@gmail.com\n"+
                 "%s\n" +
@@ -46,7 +46,7 @@ public class BashExec {
     public static void updateAllApps(){
 
         String[] cmd = {"/bin/bash","-c",""};
-        cmd[2] = ("apt-get -y upgrade");
+        cmd[2] = ("/usr/bin/apt-get -y upgrade");
         try
         {
             Runtime r = Runtime.getRuntime();
@@ -74,13 +74,13 @@ public class BashExec {
         String packName = null;
         int count = 0;
 
-        try (FileReader fileReader = new FileReader(Util.getCurrentDir() + "/list_to_update");
+        try (FileReader fileReader = new FileReader("/home/jemik/IdeaProjects/diploma/out/artifacts/diploma_jar/list_to_update");
                 BufferedReader inputFile = new BufferedReader(fileReader))
 
         {
          while ((packName = inputFile.readLine())!= null) {
              count++;
-             String command = String.format("apt-get -y install --only-upgrade %s",
+             String command = String.format("/usr/bin/apt-get -y install --only-upgrade %s",
                      packName);
              cmd[2] = command;
              try {

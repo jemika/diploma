@@ -13,7 +13,7 @@ public class Counter {
         int result = 0;
         String packageName = null;
         try (BufferedReader bufferedReader = new BufferedReader(
-                new FileReader("list_to_update")))
+                new FileReader("/home/jemik/IdeaProjects/diploma/out/artifacts/diploma_jar/list_to_update")))
         {
             while ((packageName =bufferedReader.readLine()) != null){
                 allUpdatedApps.add(packageName);
