@@ -15,7 +15,7 @@ import org.jsoup.select.Elements;
 public class Parser {
 
     public static void getNeededDate(){
-        ArrayList<String> hreflist = new ArrayList<>();
+        ArrayList<String> hrefList = new ArrayList<>();
         Map<String, Integer> priorityMap = null;
         Document doc = null;
         try {
@@ -36,18 +36,20 @@ public class Parser {
 
                 Date date = DateCheck.transformDate(date_String);
                 if (date.after(DateCheck.getUpdateDate()) || (date.compareTo(DateCheck.getUpdateDate()) == 0)) {
+
                     Elements links = elem.select("a[href]");
                     for (Element link:links) {
                         String href = link.attr("abs:href");
-                        hreflist.add(href);
-                        priorityMap = getPriorities(hreflist);
+                        hrefList.add(href);
+                        priorityMap = getPriorities(hrefList);
                         if (priorityMap.containsKey("Medium") || priorityMap.containsKey("High")){
-                            getPackagesToUpdate(hreflist);
+                            getPackagesToUpdate(hrefList);
                         }
+                        else System.exit(1);
                     }
                 }
                 priorityMap.clear();
-                hreflist.clear();
+                hrefList.clear();
             }
 
         }
