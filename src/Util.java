@@ -22,6 +22,11 @@ public class Util {
         return current + "/";
     }
 
+    public static Date getDateWithTime(){
+        Date date = new Date();
+        return date;
+    }
+
     public static Date getDate(){
         Properties properties = new Properties();
         InputStream input = null;

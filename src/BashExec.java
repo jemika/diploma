@@ -68,10 +68,11 @@ public class BashExec {
 
 
 
-    public static void update(){
+    public static String update(){
 
         String[] cmd = {"/bin/bash","-c",""};
         String packName = null;
+        String information = null;
         int count = 0;
 
         try (FileReader fileReader = new FileReader("/home/jemik/IdeaProjects/diploma/out/artifacts/diploma_jar/list_to_update");
@@ -94,6 +95,7 @@ public class BashExec {
                  while ((inputLine = in.readLine()) != null) {
                      String message = String.format("[%d\\%d] %s", count, Counter.quantityOfUpdates,inputLine);
                      System.out.println(message);
+                     information = inputLine;
                  }
                  in.close();
 
@@ -107,6 +109,7 @@ public class BashExec {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return information;
     }
 }
 

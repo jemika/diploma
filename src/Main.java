@@ -76,7 +76,7 @@ public class Main {
 
         file = new File("/home/jemik/IdeaProjects/diploma/out/artifacts/diploma_jar/list_to_update");
         if (file.exists()){
-            BashExec.update();
+            String information = BashExec.update();
             String email = Util.getEmail();
             try (InputStream inputStream = new FileInputStream("/home/jemik/IdeaProjects/diploma/out/artifacts/diploma_jar/config.properties");
             OutputStream outputStream = new FileOutputStream("/home/jemik/IdeaProjects/diploma/out/artifacts/diploma_jar/config.properties"))
@@ -92,12 +92,13 @@ public class Main {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            String message = String.format("%s on your Ubuntu OS was updated %d programs.\n" +
-                    "They are: %s\n" +
-                            "YOU NEED TO LOG IN INTO YOUR SYSTEM AND DO REBOOT",
-                    Util.getDate().toString(),
+            String message = String.format("%s was detected new information on site 'https://usn.ubuntu.com/usn/' " +
+                    "for your OS.\n" +
+                    "There is %d available updates.\n" +
+                    "After checking your system %s",
+                    Util.getDateWithTime(),
                     Counter.quantityOfUpdates,
-                    Counter.allUpdatedApps.toString());
+                    information);
             BashExec.sendEmail(message);
             file.delete();
 
