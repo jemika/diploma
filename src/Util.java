@@ -26,7 +26,7 @@ public class Util {
         Date date = new Date();
         return date;
     }
-
+    
     public static Date getDate(){
         Properties properties = new Properties();
         InputStream input = null;
@@ -34,7 +34,7 @@ public class Util {
         String date_String = null;
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
         try {
-            input = new FileInputStream("/home/jemik/IdeaProjects/diploma/out/artifacts/diploma_jar/config.properties");
+            input = new FileInputStream(Main.config);
             properties.load(input);
             date_String = properties.getProperty("updateDay");
             date = dateFormat.parse(date_String);
@@ -71,7 +71,7 @@ public class Util {
         String email = null;
 
         try {
-            input = new FileInputStream("/home/jemik/IdeaProjects/diploma/out/artifacts/diploma_jar/config.properties");
+            input = new FileInputStream(Main.config);
             properties.load(input);
             email = properties.getProperty("email");
         } catch (IOException ex) {

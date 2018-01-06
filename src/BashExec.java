@@ -4,8 +4,12 @@ public class BashExec {
 
     public static void addToCron(){
 
+        String fullpath = Main.baseDefault;
+        if (fullpath.equals(Util.getCurrentDir())) fullpath = "";
         String[] cmd = {"/bin/bash","-c",""};
-        String hourlyCron = String.format("0 * * * * /usr/bin/java -jar %sdiploma.jar", Util.getCurrentDir());
+        String hourlyCron = String.format("0 * * * * /usr/bin/java -jar %sdiploma.jar %s",
+                Util.getCurrentDir(),
+                fullpath);
         cmd[2] = String.format("crontab -l > current_cron\n" +
                 "cat >> current_cron << EOF\n" +
                 "%s\n" +
@@ -75,7 +79,7 @@ public class BashExec {
         String information = null;
         int count = 0;
 
-        try (FileReader fileReader = new FileReader("/home/jemik/IdeaProjects/diploma/out/artifacts/diploma_jar/list_to_update");
+        try (FileReader fileReader = new FileReader(Main.listFile);
                 BufferedReader inputFile = new BufferedReader(fileReader))
 
         {

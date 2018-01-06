@@ -3,10 +3,16 @@ import java.util.Properties;
 
 public class Main {
 
+    public static String baseDefault = "/home/jemik/IdeaProjects/diploma/out/artifacts/diploma_jar/";
+    public static String config = "";
+    public static String listFile = "";
 
     public static void main(String[] args) {
 
-        File file = new File("/home/jemik/IdeaProjects/diploma/out/artifacts/diploma_jar/config.properties");
+        if (args.length > 0) baseDefault = args[0];
+        config = baseDefault + "config.properties";
+        listFile = baseDefault + "list_to_update";
+        File file = new File(config);
         if (!file.exists()) {
             Properties properties = new Properties();
             System.out.print("Hello!\nWe need to configure this program, because it is first start." +
@@ -17,6 +23,7 @@ public class Main {
                  OutputStream outputStream = new FileOutputStream(file)) {
                 String answer = bufferedReader.readLine();
                 boolean flag = true;
+                boolean emailFlag = false;
                 while (flag) {
                     switch (answer) {
 
@@ -25,9 +32,8 @@ public class Main {
                                     "with name 'config.properties' in root directory later.");
                             String email = bufferedReader.readLine();
                             properties.setProperty("email", email);
-                            System.out.println("On your email was sent a test message, please check it.");
-                            BashExec.sendEmail("This is a test message to check your email.");
                             flag = false;
+                            emailFlag = true;
                             break;
                         case "no":
                             System.out.println("Ok, you can add your email later in file 'config.properties'.");
@@ -64,6 +70,12 @@ public class Main {
                         }
 
                     }
+                    if (emailFlag){
+                        System.out.println("On your email was sent a test message, please check it.");
+                        String mes = "This is a test message to check your email.";
+                        BashExec.sendEmail(mes);
+                    }
+
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -74,12 +86,12 @@ public class Main {
         BashExec.sendEmail("test_connect");
         Parser.getNeededDate();
 
-        file = new File("/home/jemik/IdeaProjects/diploma/out/artifacts/diploma_jar/list_to_update");
+        file = new File(listFile);
         if (file.exists()){
             String information = BashExec.update();
             String email = Util.getEmail();
-            try (InputStream inputStream = new FileInputStream("/home/jemik/IdeaProjects/diploma/out/artifacts/diploma_jar/config.properties");
-            OutputStream outputStream = new FileOutputStream("/home/jemik/IdeaProjects/diploma/out/artifacts/diploma_jar/config.properties"))
+            try (InputStream inputStream = new FileInputStream(config);
+            OutputStream outputStream = new FileOutputStream(config))
             {
                 Properties properties = new Properties();
                 properties.load(inputStream);
@@ -94,9 +106,11 @@ public class Main {
             }
             String message = String.format("%s was detected new information on site 'https://usn.ubuntu.com/usn/' " +
                     "for your OS.\n" +
+                    "%s" +
                     "There is %d available updates.\n" +
                     "After checking your system %s",
                     Util.getDateWithTime(),
+                    Parser.updateWithPriorities,
                     Counter.quantityOfUpdates,
                     information);
             BashExec.sendEmail(message);

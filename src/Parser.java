@@ -10,7 +10,10 @@ import org.jsoup.select.Elements;
 
 public class Parser {
 
+    public static String updateWithPriorities= null;
+
     public static void getNeededDate(){
+        StringBuilder stringBuilderFull = new StringBuilder();
         ArrayList<String> hrefList = new ArrayList<>();
         Map<String, Integer> priorityMap = null;
         Document doc = null;
@@ -31,24 +34,43 @@ public class Parser {
 
                 Date date = DateCheck.transformDate(date_String);
                 if (date.after(Util.getDate()) || (date.compareTo(Util.getDate()) == 0)) {
-
+                    StringBuilder stringBuilder = new StringBuilder();
+                    String update = elem.getElementsByTag("h3")
+                            .first()
+                            .text()
+                            .replaceAll("\\s-.*", "");
+                    stringBuilder
+                            .append("Update ")
+                            .append(update)
+                            .append(" witch secure ");
                     Elements links = elem.select("a[href]");
                     for (Element link:links) {
                         String href = link.attr("abs:href");
                         hrefList.add(href);
                         priorityMap = getPriorities(hrefList);
                         if (priorityMap.containsKey("Medium") || priorityMap.containsKey("High")){
-                            FileWriter.writeData("/home/jemik/IdeaProjects/diploma/out/artifacts/diploma_jar/list_to_update",
+                            FileWriter.writeData(Main.listFile,
                                     getPackagesToUpdate(hrefList));
-                            priorityMap.clear();
-                        }
+                            }
+
                         else continue;
                     }
+                    for(Map.Entry<String, Integer> entry: priorityMap.entrySet()) {
+                        stringBuilder
+                                .append(entry.getValue())
+                                .append(" ")
+                                .append(entry.getKey())
+                                .append(" ");
+                    }
+                    priorityMap.clear();
+                    stringBuilder.append("vulnerability(ies)\n");
+                    stringBuilderFull.append(stringBuilder.toString());
                 }
                hrefList.clear();
             }
 
         }
+        updateWithPriorities = stringBuilderFull.toString();
     }
 
     public static ArrayList<String> getPackagesToUpdate (List<String> list){
